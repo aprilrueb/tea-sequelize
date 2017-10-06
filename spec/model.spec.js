@@ -20,7 +20,7 @@ describe('Tea Model', () => {
   })
 
   describe('Class Method: findByCategory', () => {
-    it('should find all teas in a given category', () =>
+    xit('should find all teas in a given category', () =>
       Tea.findByCategory('black')
       .then(teas => {
         expect(teas).to.have.length(2)
@@ -29,7 +29,7 @@ describe('Tea Model', () => {
   })
 
   describe('Instance Method: findSimilar', () => {
-    it('should find other teas of the same category as the instance', () => Tea.findOne({ where: { name: "Earl Grey" } })
+    xit('should find other teas of the same category as the instance', () => Tea.findOne({ where: { name: "Earl Grey" } })
       .then(earlGrey => earlGrey.findSimilar())
       .then(similarTeas => expect(similarTeas).to.have.length(1))
     )
