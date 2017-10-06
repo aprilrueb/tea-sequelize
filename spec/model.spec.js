@@ -7,7 +7,7 @@ const { createTeas } = require('../models/seed')
 describe('Tea Model', () => {
   before(() => db.sync({ force: true }))
   before('Creating test data...', createTeas)
-  beforeEach(() => Tea.truncate())
+  // beforeEach(() => Tea.truncate())
 
   describe('Virtual: dollarPrice', () => {
     it('returns the price of the tea as a formatted string', () => {
@@ -20,7 +20,7 @@ describe('Tea Model', () => {
   })
 
   describe('Class Method: findByCategory', () => {
-    xit('should find all teas in a given category', () =>
+    it('should find all teas in a given category', () =>
       Tea.findByCategory('black')
       .then(teas => {
         expect(teas).to.have.length(2)
@@ -29,7 +29,7 @@ describe('Tea Model', () => {
   })
 
   describe('Instance Method: findSimilar', () => {
-    xit('should find other teas of the same category as the instance', () => Tea.findOne({ where: { name: "Earl Grey" } })
+    it('should find other teas of the same category as the instance', () => Tea.findOne({ where: { title: "Earl Grey" } })
       .then(earlGrey => earlGrey.findSimilar())
       .then(similarTeas => expect(similarTeas).to.have.length(1))
     )
@@ -38,14 +38,13 @@ describe('Tea Model', () => {
   describe('Hook', () => {
     it('should capitalize the name of the tea', () =>
       Tea.create({
-        name: 'chai tea',
+        title: 'chai tea',
         price: 1095,
         description: 'This ancient recipe of black tea spiced with Indian herbs and spices produces a warm, soothing drink that will soothe and satisfy.',
         category: 'black'
       })
-      .then(() => Tea.findById(1))
       .then(newTea => {
-        expect(newTea.name).to.equal("Chai Tea")
+        expect(newTea.title).to.equal("Chai Tea")
       })
     )
   })

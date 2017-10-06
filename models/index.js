@@ -16,15 +16,14 @@ const Tea = db.define('tea', {
     }
   },
   hooks: {
-    afterCreate: {
+    beforeCreate:
       function(instance){
         let title = [];
         instance.title.split(' ').forEach(function(element){
           title.push(element.slice(0, 1).toUpperCase() + element.slice(1));
         });
-        return title.join(' ');
+        instance.title = title.join(' ');
       }
-    }
   }
 });
 
@@ -32,8 +31,17 @@ Tea.findByCategory = function(category){
   return Tea.findAll({where: {category: category}});
 };
 
-Tea.prototype.findSimilar = function(){
+const Op = Sequelize.Op;
 
+Tea.prototype.findSimilar = function(){
+  return Tea.findAll({
+    where: {
+      category: this.category,
+      id: {
+        [Op.ne]: this.id
+      }
+    }
+  });
 };
 
 module.exports = { db, Tea };
